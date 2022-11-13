@@ -13,16 +13,19 @@ const chromedriver = require("chromedriver");
 const driver: WebDriver = new Builder()
     .withCapabilities(Capabilities.chrome())
     .build();
-describe(('this is a test'), ()=>{
+
+describe(('User Tests'), ()=>{
     beforeEach(async () => {
         await driver.get(
         "http://vocaljournal.herokuapp.com/"
         );
     });
-    afterAll(async () => {
+    afterAll( async () => {
         await driver.quit();
     });
-    test('test', ()=>{
-        expect(5).toBe(5);
-    })
-})
+
+    test('A user can login from the main page', async ()=>{
+        await driver.findElement(By.xpath("//a[normalize-space()='Log In']")).click();
+        await driver.sleep(500);
+    });
+});
