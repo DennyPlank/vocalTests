@@ -3,9 +3,19 @@ import { Vocal } from "../../Models/vocalModel";
 const vocal = new Vocal()
 
 describe("Login Test Suite", () => {
-    test('A user can login', async () =>{
+    beforeAll(async ()=>{
         await vocal.navigate();
-        await vocal.login();
+    })
+    afterAll( async ()=>{
+        await vocal.quit()
+    }
+    )
+
+    test('A user can login', async () =>{
+        await vocal.userLogin();
+    })
+    test('A user can logout', async () => {
+        await vocal.userLogout();
     })
 })
 
