@@ -7,6 +7,9 @@ interface Options {
 }
 
 export class BasePage {
+     amountToSleep = (sleepLength: number) => {
+        return 
+    }
     driver: WebDriver
     url: string
 
@@ -21,9 +24,13 @@ export class BasePage {
         else if (this.url) return await this.driver.get(this.url);
         else return Promise.reject('You need to provide a url to test a page')
     }
-    
+
     async quit() {
         await this.driver.quit();
+    }
+
+    async sleep(num: number) {
+        await this.driver.sleep(num)
     }
 
     async getElement(elementBy: By): Promise<WebElement> {

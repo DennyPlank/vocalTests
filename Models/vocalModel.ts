@@ -20,15 +20,15 @@ export class Vocal extends BasePage{
 
     
     // Place model specific methods here
-    async userLogin() {
+    async userLogin(login: string, password: string) {
         await (await this.getElement(this.loginHomeButton)).click()
         await (await this.getElement(this.emailLoginForm)).click()
-        await (await this.getElement(this.emailLoginForm)).sendKeys(userEmail)
+        await (await this.getElement(this.emailLoginForm)).sendKeys(login)
         await (await this.getElement(this.passwordLoginForm)).click()
-        await (await this.getElement(this.passwordLoginForm)).sendKeys(userPassword)
+        await (await this.getElement(this.passwordLoginForm)).sendKeys(password)
         await (await this.getElement(this.loginSubmitButton)).click();
     }
-    async userLogout(){
+    async userLogout() {
         await (await this.getElement(this.loggedInDropDownMenu)).click()
         await (await this.getElement(this.loggedInLogoutButton)).click()
     }

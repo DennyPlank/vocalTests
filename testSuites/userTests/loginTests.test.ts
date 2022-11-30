@@ -2,45 +2,26 @@ import { Vocal } from "../../Models/vocalModel";
 
 const vocal = new Vocal()
 
+// Test Variables here
+let validEmail = 'DennyMouzon@gmail.com'
+let validPassword = 'Mxracer14'
+let invalidEmail = 'ThisEmailIsNotValid'
+let invalidPassword = 'ThisPassWordIsNotValid'
+
 describe("Login Test Suite", () => {
     beforeAll(async ()=>{
         await vocal.navigate();
-    })
+    });
     afterAll( async ()=>{
-        await vocal.quit()
-    }
-    )
+        await vocal.quit();
+    });
 
-    test('A user can login', async () =>{
-        await vocal.userLogin();
-    })
-    test('A user can logout', async () => {
+    test('A user can login and logout', async () =>{
+        await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
     })
-})
-
-// describe(('User Tests'), ()=>{
-//     beforeEach(async () => {
-//         await vocal.navigate()
-//     });
-//     afterAll( async () => {
-//         await driver.sleep(3000)
-//         await driver.quit();
-//     });
-
-//     test('A user can login from the main page and log back out,', async ()=>{
-//         // Login steps
-//         await driver.findElement(By.xpath("//a[normalize-space()='Log In']")).click();
-//         await driver.findElement(By.xpath("//input[@id='formBasicEmail']")).click();
-//         await driver.findElement(By.xpath("//input[@id='formBasicEmail']")).sendKeys("DennyMouzon@gmail.com");
-//         await driver.findElement(By.xpath("//input[@id='formBasicPassword']")).click();
-//         await driver.findElement(By.xpath("//input[@id='formBasicPassword']")).sendKeys("Mxracer14");
-//         await driver.findElement(By.xpath("//button[@type='submit']")).click();
-//         await driver.sleep(2000);
-
-//         // Logout steps
-//         await driver.findElement(By.xpath("//span[@class='navdropdown-title']")).click();
-//         await driver.findElement(By.xpath("//a[normalize-space()='Logout']")).click();
-
-//     });
-// });
+    test('A user gets an error message if the try to login with an incorrect password or email', async () => {
+        await vocal.userLogin(invalidEmail, invalidPassword);
+        await vocal.sleep(5000)
+    })
+});
