@@ -19,6 +19,7 @@ export class Vocal extends BasePage{
     loggedInLogoutButton: By = By.xpath("//a[normalize-space()='Logout']")
     landingPage: By = By.xpath("screen.getByText('Updated button')")
     signUpButton: By = By.xpath("//button[@class='sc-eCImPb cnkRfv landing-button']");
+    signUpButtonLogin: By = By.xpath("//a[normalize-space()='Sign Up']");
 
     
     // Place model specific methods here

@@ -1,5 +1,6 @@
-import { Vocal } from "../../Models/vocalModel";
-import {screen} from '@testing-library/dom'
+import { Vocal } from '../../Models/vocalModel';
+import {screen} from '@testing-library/dom';
+
 
 const vocal = new Vocal()
 
@@ -20,10 +21,9 @@ describe("Login Test Suite", () => {
     test('A user can login and logout', async () =>{
         await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
-        try {
-            expect(screen.getByText('Sign In')).toBeVisible();
-        } catch {
-            console.log('Logout Failed')
-        }
-    }, 5000)
+
+        let getSignUpButtonText = await vocal.getText(vocal.signUpButtonLogin)
+        console.log(getSignUpButtonText)
+        expect(screen.getByText("Sign Up")).toBeVisible();
+    })
 });
