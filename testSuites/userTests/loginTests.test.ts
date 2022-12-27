@@ -14,23 +14,23 @@ import {
   const vocal = new Vocal()
 
 // Test Variables here
-let validEmail = 'DennyMouzon@gmail.com'
-let validPassword = 'Mxracer14'
+let validEmail = 'TestEmail@gmail.com'
+let validPassword = '123456789'
 let invalidEmail = 'ThisEmailIsNotValid'
 let invalidPassword = 'ThisPassWordIsNotValid'
 
 describe("Login Test Suite", () => {
-    beforeAll(async ()=>{
+    beforeEach(async ()=>{
         await vocal.navigate();
     });
-    afterAll( async ()=>{
+    afterEach( async ()=>{
         await vocal.quit();
     });
     
     test('A user can login and logout', async () =>{
         await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
-        const buttonCheck = await vocal.getElement(vocal.loginHomeButton)
+        const buttonCheck = await vocal.getText(vocal.loginHomeButton)
         expect(buttonCheck).toBeVisible()
     })
 });
