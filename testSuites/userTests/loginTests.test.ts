@@ -1,8 +1,17 @@
 import { Vocal } from '../../Models/vocalModel';
-import {screen} from '@testing-library/dom';
+import {
+    getByLabelText,
+    getByText,
+    getByTestId,
+    queryByTestId,
+    // Tip: all queries are also exposed on an object
+    // called "queries" which you could import here as well
+    waitFor,
+  } from '@testing-library/dom'
+  import '@testing-library/jest-dom';
+//   import {render, screen }'@testing-library/react'
 
-
-const vocal = new Vocal()
+  const vocal = new Vocal()
 
 // Test Variables here
 let validEmail = 'DennyMouzon@gmail.com'
@@ -21,9 +30,7 @@ describe("Login Test Suite", () => {
     test('A user can login and logout', async () =>{
         await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
-
-        let getSignUpButtonText = await vocal.getText(vocal.signUpButtonLogin)
-        console.log(getSignUpButtonText)
-        expect(screen.getByText("Sign Up")).toBeVisible();
+        const buttonCheck = await vocal.getElement(vocal.loginHomeButton)
+        expect(buttonCheck).toBeVisible()
     })
 });

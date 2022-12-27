@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/DennyPlank/vocalTests#readme",
   "devDependencies": {
-    "@testing-library/dom": "^8.19.0",
+    "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.2",

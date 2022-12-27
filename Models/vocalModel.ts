@@ -1,10 +1,6 @@
 import {By} from "selenium-webdriver";
 import { BasePage } from "../basePage";
 
-// Login credentials
-let userEmail = 'DennyMouzon@gmail.com'
-let userPassword = 'Mxracer14'
-
 export class Vocal extends BasePage{
     constructor() {
         super({url: "http://vocaljournal.herokuapp.com/"})
