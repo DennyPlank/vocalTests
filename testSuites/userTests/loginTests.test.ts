@@ -23,14 +23,28 @@ describe("Login Test Suite", () => {
     beforeEach(async ()=>{
         await vocal.navigate();
     });
-    afterEach( async ()=>{
+    afterAll( async ()=>{
         await vocal.quit();
     });
-    
+
     test('A user can login and logout', async () =>{
+        await vocal.userLogin(validEmail, validPassword);
+        const nameCheck = await vocal.getText(vocal.signedInNameCheck)
+        expect(nameCheck).not.toContain("Invalid")
+    })
+    test('A user can log out', async () => {
         await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
         const buttonCheck = await vocal.getText(vocal.loginHomeButton)
-        expect(buttonCheck).toBeVisible()
+        expect(buttonCheck).toContain("Log In")
+    })
+    test('A new user can create an account from the home page', async () =>{
+        let nicknameTest = "Test Nickname"
+        let emailTest = "TestEmail@test.com"
+        let passowordTest = "TestPassWord"
+        await vocal.userSignUp(nicknameTest, emailTest, passowordTest)
+        let signedInNameCheck = await vocal.getText(vocal.signedInNameCheck)
+        expect(signedInNameCheck).toBe(`${nicknameTest}`)
+        await vocal.userAccountDelete()
     })
 });
