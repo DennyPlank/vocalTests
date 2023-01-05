@@ -45,11 +45,11 @@ export class Vocal extends BasePage{
     async userAccountDelete() {
         await (await this.getElement(this.loggedInDropDownMenu)).click()
         await (await this.getElement(this.loggedInProfileButton)).click()
-        
         // The below element is not in view. We need to get the element into view before it can be clicked on.
+        await this.scrollToElement(this.loggedInDeleteUserButton)
         await (await this.getElement(this.loggedInDeleteUserButton)).click()
         await (await this.getElement(this.loggedInFinalDeleteUserButton)).click()
-        await this.sleep(1500)
+        await this.sleep(500)
         console.log("Account delete successful")
     }
 
@@ -61,6 +61,6 @@ export class Vocal extends BasePage{
         await (await this.getElement(this.signUpPasswordConfirm)).sendKeys(password)
         await (await this.getElement(this.signUpRegisterButton)).click()
         console.log(`Success! Password: ${password}, Email: ${email}.`)
-        await this.sleep(2500)
+        await this.sleep(500)
     }
 }
