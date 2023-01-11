@@ -4,40 +4,30 @@ import { Vocal } from '../../Models/vocalModel';
 
 // Test Variables here
 let validEmail = 'ValidEmail@test.com'
-let validNickname = "Nickname"
 let validPassword = '123456789'
-let invalidEmail = 'ThisEmailIsNotValid'
-let invalidPassword = 'ThisPassWordIsNotValid'
 let nicknameDeleteTest = "Test Nickname"
 let emailDeleteTest = "TestEmailTest@test.com"
 let passowordDeleteTest = "TestPassWordTest"
 
 
-describe("Login Test Suite", () => {
-    beforeEach(async ()=>{
-        await vocal.navigate();
-    });
-    afterAll( async ()=>{
-        await vocal.quit();
-    });
+describe("User log in and profile Test Suite", () => {
+    vocal.vocalSetupAndTeardown();
 
-    test('A user can login and logout', async () =>{
+    test('A user can login', async () =>{
         await vocal.userLogin(validEmail, validPassword);
-        const nameCheck = await vocal.getText(vocal.signedInNameCheck)
-        expect(nameCheck).not.toContain("Invalid")
-    })
+        await vocal.assertHomePageSignedIn();
+    }, 5000)
+
     test('A user can log out', async () => {
         await vocal.userLogin(validEmail, validPassword);
         await vocal.userLogout();
-        
-        const buttonCheck = await vocal.getText(vocal.loginHomeButton)
-        expect(buttonCheck).toContain("Log In")
-    })
+        await vocal.assertHomePageLoggedOut();
+    }, 5000)
     
-    test('A new user can create an account from the home page', async () =>{
+    test('A new user can create and delete an account', async () =>{
         await vocal.userSignUp(nicknameDeleteTest, emailDeleteTest, passowordDeleteTest)
-        let signedInNameCheck = await vocal.getText(vocal.signedInNameCheck)
-        expect(signedInNameCheck).toBe(`${nicknameDeleteTest}`)
-        await vocal.userAccountDelete()
-    })
+        await vocal.assertHomePageSignedIn()
+        await vocal.userAccountDelete();
+        await vocal.assertHomePageLoggedOut();
+    }, 5000)
 });

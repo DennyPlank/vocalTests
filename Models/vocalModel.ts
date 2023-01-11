@@ -1,12 +1,13 @@
 import {By, until} from "selenium-webdriver";
 import { BasePage } from "../basePage";
 
+
 export class Vocal extends BasePage{
     constructor() {
         super({url: "http://vocaljournal.herokuapp.com/"})
     }
 
-    // Model specific variables go here (xpath's)
+    // Model specific variables go here (xpath's and cssSelectors)
     loginHomeButton: By = By.xpath("//a[normalize-space()='Log In']");
     emailLoginForm: By = By.xpath("//input[@id='formBasicEmail']");
     passwordLoginForm: By = By.xpath("//input[@id='formBasicPassword']")
@@ -21,14 +22,25 @@ export class Vocal extends BasePage{
     signUpEmailInput: By = By.xpath("//input[@id='formBasicEmail']")
     signUpPassword: By = By.xpath("//div[3]//input[1]")
     signUpPasswordConfirm: By = By.xpath("//div[4]//input[1]")
-    signUpRegisterButton: By = By.xpath("//button[@type='submit']")
-    loggedInProfileButton: By = By.xpath("//a[normalize-space()='Profile']")
-    loggedInDeleteUserButton: By = By.xpath("//button[normalize-space()='Delete User']")
-    loggedInFinalDeleteUserButton: By = By.xpath("//button[normalize-space()='Delete Account']")
+    
+    // Put some Selectors here to show useage 
+    signUpRegisterButton: By = By.css("button[type='submit']")
+    loggedInProfileButton: By = By.css(".dropdown-item[aria-selected='false']")
+    loggedInDeleteUserButton: By = By.css("div[id='root'] div div div button[class='sc-eCImPb cnkRfv']")
+    loggedInFinalDeleteUserButton: By = By.css("div[role='dialog'] button:nth-child(2)")
     
 
     
     // Place model specific methods here
+    async vocalSetupAndTeardown() {
+        beforeEach(async ()=>{
+            await this.navigate();
+        });
+        afterAll( async ()=>{
+            await this.quit();
+        });
+    }
+
     async userLogin(login: string, password: string) {
         await (await this.getElement(this.loginHomeButton)).click()
         await (await this.getElement(this.emailLoginForm)).click()
@@ -45,8 +57,8 @@ export class Vocal extends BasePage{
     async userAccountDelete() {
         await (await this.getElement(this.loggedInDropDownMenu)).click()
         await (await this.getElement(this.loggedInProfileButton)).click()
-        // The below element is not in view. We need to get the element into view before it can be clicked on.
         await this.scrollToElement(this.loggedInDeleteUserButton)
+        // The below element is not in view and needs to be scrolled too.
         await (await this.getElement(this.loggedInDeleteUserButton)).click()
         await (await this.getElement(this.loggedInFinalDeleteUserButton)).click()
         await this.sleep(500)
@@ -62,5 +74,16 @@ export class Vocal extends BasePage{
         await (await this.getElement(this.signUpRegisterButton)).click()
         console.log(`Success! Password: ${password}, Email: ${email}.`)
         await this.sleep(500)
+    }
+
+    // Asserts here
+
+    async assertHomePageLoggedOut() {
+        let buttonCheck = await this.getText(this.loginHomeButton)
+        expect(buttonCheck).toContain("Log In")
+    }
+    async  assertHomePageSignedIn() {
+        let signedInNameCheck = await this.getText(this.signedInNameCheck)
+        expect(signedInNameCheck).toContain("Nick")
     }
 }

@@ -7,9 +7,6 @@ interface Options {
 }
 
 export class BasePage {
-     amountToSleep = (sleepLength: number) => {
-        return 
-    }
     driver: WebDriver
     url: string
 
@@ -18,7 +15,6 @@ export class BasePage {
         else this.driver = new Builder().withCapabilities(Capabilities.chrome()).build();
         if(options && options.url) this.url = options.url
     }
-
     
     async navigate(url?: string): Promise<void> {
         if (url) return await this.driver.get(url);
@@ -58,6 +54,8 @@ export class BasePage {
     async scrollToElement(element: Locator) {
         let elementToScrollTo = await this.driver.findElement(element)
         await this.driver.executeScript("arguments[0].scrollIntoView();", elementToScrollTo);
+        /* I don't like this sleep here. How can I get this to wait for the above 
+        scrolling function to finsih without using sleep? */ 
         await this.driver.sleep(500)
     }
     
